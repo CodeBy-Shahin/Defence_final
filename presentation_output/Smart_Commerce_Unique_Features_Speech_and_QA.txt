@@ -1,0 +1,65 @@
+Smart Commerce - Unique Features Presentation Speech and Q&A
+Prepared for project presentation and viva discussion
+
+Presentation Speech
+
+Good morning respected supervisor, honorable guests, and everyone present here.
+Today, I am going to present the unique features of my project, Smart Commerce. My project is designed to make business management smarter, faster, and more reliable by using artificial intelligence, inventory intelligence, real-time analysis, and customer support automation.
+In many businesses, one of the biggest problems is managing products, stock, customer demand, and customer support properly. Sometimes products go out of stock. Sometimes extra products remain unsold. Sometimes the owner cannot understand which product is performing well. Also, customers may not get quick support when they have questions. These problems can reduce profit, waste time, and lower customer satisfaction.
+To solve these problems, I included several important and unique features in my project.
+The first unique feature is AI-based demand forecasting. This feature helps the system predict future product demand by analyzing previous sales data and product trends. In my project, the backend collects product and order information, prepares recent sales history, and sends it to a forecasting process. The forecasting logic checks previous sales, gives more importance to recent sales, identifies the demand trend, and estimates future demand. For example, if a product is selling more in recent days, the system can show that the demand is rising. This helps the business owner decide how much stock should be kept.
+The second feature is Inventory Intelligence. This feature makes inventory management smarter. A normal inventory system only stores product quantity, but my system gives more useful information. It helps the admin or vendor understand which products are available, which products are low in stock, and which products need attention. It also supports stock adjustment and keeps inventory records. Because of this, stock management becomes more controlled and easier to monitor.
+The third feature is the low stock alert. This feature is very important for avoiding stock-out problems. When any product quantity goes below the alert level, the system shows it as a low-stock product. The business owner can then restock the product before it becomes unavailable. This helps maintain smooth business operation and improves customer satisfaction.
+The fourth feature is real-time analysis. In traditional systems, business owners often need to wait for manual reports. But in my project, important information can be seen from the dashboard. The system can show updated sales, inventory status, product performance, recent orders, and other useful business data. This helps the admin make quick and accurate decisions based on the latest available information.
+The fifth unique feature is an AI-based customer support chatbot. Customers often ask common questions about products, orders, availability, checkout, or services. In my project, the chatbot can answer these questions instantly. It works by taking the user's question, matching it with available project knowledge and product-related information, and then giving a helpful response. This reduces pressure on the business owner and support team. It also improves customer experience because customers can get support quickly.
+Overall, my project is not only a simple e-commerce or inventory system. It is a smart business support system. It helps reduce manual work, saves time, improves inventory control, supports better decision-making, and gives better customer service.
+The main goal of this project is to make business operations easier and more intelligent. By combining demand forecasting, inventory intelligence, low stock alerts, real-time analysis, and chatbot support, this project can help a business become more efficient, organized, and customer-friendly.
+In the future, this project can be improved further by adding more advanced AI prediction, automatic stock reduction after order placement, supplier management, voice-based chatbot support, mobile app integration, and live notification features.
+Thank you for listening to my presentation. I am ready to answer your questions.
+
+Possible Supervisor and Guest Questions with Answers
+
+1. Question: What is the main purpose of your project?
+Answer: The main purpose of my project is to help businesses manage products, inventory, sales, and customer support more intelligently using AI-based forecasting, dashboard analysis, and automation.
+
+2. Question: What makes your project different from a normal inventory system?
+Answer: A normal inventory system mainly stores product quantity. My project includes demand forecasting, inventory intelligence, low stock alerts, real-time dashboard analysis, and chatbot support, so it helps with both management and decision-making.
+
+3. Question: How did you apply demand forecasting in your project?
+Answer: I applied demand forecasting by using previous order and product sales data. The backend collects active products and sales history, then prepares product-wise demand information. The forecasting logic checks recent sales, uses weighted average ideas, identifies whether demand is rising or stable, and returns predicted demand for future days.
+
+4. Question: How does your demand forecasting feature work?
+Answer: It works in a few steps. First, the system reads past sales data from orders. Second, it groups sales by product. Third, it gives more importance to recent sales because recent demand is usually more useful. Fourth, it calculates expected future demand and shows the result to the admin. This helps the admin make better restocking decisions.
+
+5. Question: Is your demand forecasting deep learning?
+Answer: No, it is not deep learning. It is an explainable forecasting method based on sales history, weighted average, trend checking, and confidence scoring. I used this approach because it is easier to understand and suitable for this project level.
+
+6. Question: Why did you add AI-based demand forecasting?
+Answer: I added it to reduce guesswork in stock planning. It helps the business owner understand which products may need more stock in the future and which products may not need extra stock.
+
+7. Question: What is Inventory Intelligence?
+Answer: Inventory Intelligence means the system does more than store stock numbers. It shows stock status, low-stock products, reorder needs, stock adjustments, and inventory records so the admin or vendor can manage products more smartly.
+
+8. Question: How does the low stock alert help the business?
+Answer: Low stock alert helps the business owner know when a product quantity is becoming low. Because of this, they can restock on time and avoid losing customers due to unavailable products.
+
+9. Question: What do you mean by real-time analysis in your project?
+Answer: Real-time analysis means the dashboard shows the latest available data from the system when the page or API request is loaded. It helps the admin see updated information about sales, orders, products, and inventory without manually preparing reports.
+
+10. Question: How did you apply the chatbot in your project?
+Answer: I applied the chatbot as a customer support feature. The chatbot is connected with project knowledge and product-related information. When a user asks a question, the chatbot checks the question, matches it with known topics, and gives a relevant answer.
+
+11. Question: How does your chatbot work?
+Answer: The chatbot works by taking the user's message, processing the text, matching important words with stored knowledge, and selecting the most suitable answer. It can answer questions about products, checkout, orders, receipts, dashboards, low stock, demand forecasting, and project features.
+
+12. Question: Does your chatbot use ChatGPT or an external AI model?
+Answer: No, the current chatbot does not use ChatGPT or an external AI model. It is a rule-based and knowledge-based chatbot. It gives answers using keyword matching and prepared project information.
+
+13. Question: Who can use this project?
+Answer: Small and medium businesses, online stores, retail shops, and product-based companies can use this project to manage inventory, orders, and customers more effectively.
+
+14. Question: What are the future improvements of your project?
+Answer: Future improvements can include advanced AI prediction, automatic stock update after order placement, supplier management, voice chatbot support, mobile app integration, online payment integration, and live notification using WebSocket.
+
+15. Question: What did you learn from this project?
+Answer: I learned how to combine business management with AI-based features. I also learned about inventory control, demand prediction, dashboard analysis, customer support automation, and full-stack project development.

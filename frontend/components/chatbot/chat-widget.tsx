@@ -14,6 +14,7 @@ type ChatResponse = {
   data?: {
     answer: string;
     source: string;
+    matchedSources?: string[];
   };
   message?: string;
 };
@@ -43,7 +44,7 @@ export default function ChatWidget({ position = "bottom" }: ChatWidgetProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
-      text: "Hi! I am the Smart Commerce rule + database chatbot. Ask me about products, orders, dashboards, low stock, demand forecast, accounts, or project setup.",
+      text: "Hi! I am the Smart Commerce AI support chatbot. Ask me about project features, products, prices, stock, orders, dashboards, low-stock alerts, demand forecast, accounts, or setup.",
       sender: "bot",
     },
   ]);
@@ -101,7 +102,7 @@ export default function ChatWidget({ position = "bottom" }: ChatWidgetProps) {
           <div className="flex items-center justify-between rounded-t-lg bg-orange-600 p-4 text-white">
             <div>
               <h3 className="text-lg font-bold">Smart Commerce Support</h3>
-              <p className="text-xs opacity-90">Rule + project database answers</p>
+              <p className="text-xs opacity-90">AI + project data answers</p>
             </div>
             <button
               type="button"
@@ -151,7 +152,7 @@ export default function ChatWidget({ position = "bottom" }: ChatWidgetProps) {
                     void handleSendMessage();
                   }
                 }}
-                placeholder="Ask about project data..."
+                placeholder="Ask about products or project..."
                 className="min-w-0 flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-orange-600 focus:outline-none"
               />
               <button

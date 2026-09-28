@@ -508,67 +508,68 @@ async function seed() {
     savedProducts.push(savedProduct);
   }
 
-  if ((await OrderModel.countDocuments()) === 0) {
-    const orderSeeds = [
-      {
-        orderNumber: "ORD-2026-001",
-        customerName: "Aisha Rahman",
-        customerEmail: "aisha@example.com",
-        status: "delivered",
-        paymentStatus: "paid",
-        paymentMethod: "cod",
-        items: [savedProducts[0], savedProducts[1]],
-      },
-      {
-        orderNumber: "ORD-2026-002",
-        customerName: "Tariq Mahmud",
-        customerEmail: "tariq@example.com",
-        status: "processing",
-        paymentStatus: "pending",
-        paymentMethod: "cod",
-        items: [savedProducts[3], savedProducts[4]],
-      },
-      {
-        orderNumber: "ORD-2026-003",
-        customerName: "Nabila Sultana",
-        customerEmail: "nabila@example.com",
-        status: "shipped",
-        paymentStatus: "paid",
-        paymentMethod: "card",
-        items: [savedProducts[5], savedProducts[6]],
-      },
-      {
-        orderNumber: "ORD-2026-004",
-        customerName: "Rifat Hossain",
-        customerEmail: "rifat@example.com",
-        status: "delivered",
-        paymentStatus: "paid",
-        paymentMethod: "card",
-        items: [savedProducts[9]],
-      },
-      {
-        orderNumber: "ORD-2026-005",
-        customerName: "Sadia Karim",
-        customerEmail: "sadia@example.com",
-        status: "pending",
-        paymentStatus: "pending",
-        paymentMethod: "cod",
-        items: [savedProducts[11], savedProducts[12]],
-      },
-    ];
+  const orderSeeds = [
+    {
+      orderNumber: "ORD-2026-001",
+      customerName: "Aisha Rahman",
+      customerEmail: "aisha@example.com",
+      status: "delivered",
+      paymentStatus: "paid",
+      paymentMethod: "cod",
+      items: [savedProducts[0], savedProducts[1]],
+    },
+    {
+      orderNumber: "ORD-2026-002",
+      customerName: "Tariq Mahmud",
+      customerEmail: "tariq@example.com",
+      status: "processing",
+      paymentStatus: "pending",
+      paymentMethod: "cod",
+      items: [savedProducts[3], savedProducts[4]],
+    },
+    {
+      orderNumber: "ORD-2026-003",
+      customerName: "Nabila Sultana",
+      customerEmail: "nabila@example.com",
+      status: "shipped",
+      paymentStatus: "paid",
+      paymentMethod: "card",
+      items: [savedProducts[5], savedProducts[6]],
+    },
+    {
+      orderNumber: "ORD-2026-004",
+      customerName: "Rifat Hossain",
+      customerEmail: "rifat@example.com",
+      status: "delivered",
+      paymentStatus: "paid",
+      paymentMethod: "card",
+      items: [savedProducts[9]],
+    },
+    {
+      orderNumber: "ORD-2026-005",
+      customerName: "Sadia Karim",
+      customerEmail: "sadia@example.com",
+      status: "pending",
+      paymentStatus: "pending",
+      paymentMethod: "cod",
+      items: [savedProducts[11], savedProducts[12]],
+    },
+  ];
 
-    for (const [index, order] of orderSeeds.entries()) {
-      const items = order.items.map((product, itemIndex) => ({
-        product: product._id,
-        productName: product.name,
-        quantity: itemIndex === 0 ? 1 : 2,
-        unitPrice: product.price,
-      }));
+  for (const [index, order] of orderSeeds.entries()) {
+    const items = order.items.map((product, itemIndex) => ({
+      product: product._id,
+      productName: product.name,
+      quantity: itemIndex === 0 ? 1 : 2,
+      unitPrice: product.price,
+    }));
 
-      const subtotal = items.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0);
-      const shippingFee = index % 2 === 0 ? 60 : 80;
+    const subtotal = items.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0);
+    const shippingFee = index % 2 === 0 ? 60 : 80;
 
-      await OrderModel.create({
+    await OrderModel.replaceOne(
+      { orderNumber: order.orderNumber },
+      {
         orderNumber: order.orderNumber,
         customerName: order.customerName,
         customerEmail: order.customerEmail,
@@ -580,8 +581,9 @@ async function seed() {
         subtotal,
         shippingFee,
         total: subtotal + shippingFee,
-      });
-    }
+      },
+      { upsert: true },
+    );
   }
 
   const daysAgo = (days: number) => new Date(Date.now() - days * 24 * 60 * 60 * 1000);
@@ -698,35 +700,96 @@ async function seed() {
     );
   }
 
-  if ((await AuditLogModel.countDocuments()) === 0) {
-    await AuditLogModel.insertMany([
-      {
-        actor: adminUser._id,
-        actorEmail: adminUser.email,
-        action: "products.created",
-        entityType: "product",
-        entityId: savedProducts[0].id,
-        status: "success",
-        metadata: { sku: savedProducts[0].sku },
-      },
-      {
-        actor: adminUser._id,
-        actorEmail: adminUser.email,
-        action: "inventory.threshold_adjusted",
-        entityType: "product",
-        entityId: savedProducts[9].id,
-        status: "success",
-        metadata: { from: 6, to: 8 },
-      },
-      {
-        actor: adminUser._id,
-        actorEmail: adminUser.email,
-        action: "analytics.overview_viewed",
-        entityType: "dashboard",
-        entityId: "overview",
-        status: "success",
-      },
-    ]);
+  const auditSeeds = [
+    {
+      actor: adminUser._id,
+      actorEmail: adminUser.email,
+      action: "products.created",
+      entityType: "product",
+      entityId: savedProducts[0].id,
+      status: "success",
+      metadata: { sku: savedProducts[0].sku, seedKey: "seed-products-created" },
+    },
+    {
+      actor: adminUser._id,
+      actorEmail: adminUser.email,
+      action: "inventory.threshold_adjusted",
+      entityType: "product",
+      entityId: savedProducts[9].id,
+      status: "success",
+      metadata: { from: 6, to: 8, seedKey: "seed-inventory-threshold-adjusted" },
+    },
+    {
+      actor: adminUser._id,
+      actorEmail: adminUser.email,
+      action: "analytics.overview_viewed",
+      entityType: "dashboard",
+      entityId: "overview",
+      status: "success",
+      metadata: { seedKey: "seed-analytics-overview-viewed" },
+    },
+    {
+      actor: adminUser._id,
+      actorEmail: adminUser.email,
+      action: "auth.login",
+      entityType: "user",
+      entityId: adminUser.id,
+      status: "success",
+      metadata: { seedKey: "seed-admin-login" },
+    },
+    {
+      actor: adminUser._id,
+      actorEmail: adminUser.email,
+      action: "auth.logout",
+      entityType: "user",
+      entityId: adminUser.id,
+      status: "success",
+      metadata: { seedKey: "seed-admin-logout" },
+    },
+    {
+      actor: demoVendor._id,
+      actorEmail: demoVendor.email,
+      action: "auth.login",
+      entityType: "user",
+      entityId: demoVendor.id,
+      status: "success",
+      metadata: { seedKey: "seed-vendor-login" },
+    },
+    {
+      actor: demoVendor._id,
+      actorEmail: demoVendor.email,
+      action: "auth.logout",
+      entityType: "user",
+      entityId: demoVendor.id,
+      status: "success",
+      metadata: { seedKey: "seed-vendor-logout" },
+    },
+    {
+      actor: demoCustomer._id,
+      actorEmail: demoCustomer.email,
+      action: "auth.login",
+      entityType: "user",
+      entityId: demoCustomer.id,
+      status: "success",
+      metadata: { seedKey: "seed-customer-login" },
+    },
+    {
+      actor: demoCustomer._id,
+      actorEmail: demoCustomer.email,
+      action: "auth.logout",
+      entityType: "user",
+      entityId: demoCustomer.id,
+      status: "success",
+      metadata: { seedKey: "seed-customer-logout" },
+    },
+  ];
+
+  for (const audit of auditSeeds) {
+    await AuditLogModel.updateOne(
+      { "metadata.seedKey": audit.metadata.seedKey },
+      { $set: audit },
+      { upsert: true },
+    );
   }
 
   logger.info("Seed completed");

@@ -17,11 +17,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false, message: "Question is required" }, { status: 400 });
   }
 
+  const reply = await answerChatbotQuestion(question);
+
   return NextResponse.json({
     success: true,
     data: {
-      answer: answerChatbotQuestion(question),
-      source: "rule-database",
+      answer: reply.answer,
+      source: reply.source,
+      matchedSources: reply.matchedSources,
     },
   });
 }

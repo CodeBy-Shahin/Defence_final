@@ -8,3 +8,8 @@ __pycache__/
 *.pyc
 sample_report_extract.txt
 *.archive
+*.log
+.env
+.env.*
+!.env.example
+!.env.production

@@ -1,5 +1,5 @@
-const DEFAULT_BACKEND_ORIGIN = "http://localhost";
-const DEFAULT_BACKEND_PORT = "5000";
+const DEFAULT_BACKEND_ORIGIN = "https://p-backend-mw09.onrender.com";
+const DEFAULT_BACKEND_PORT = "";
 const DEFAULT_API_PATH = "/api";
 
 function getEnvValue(value: string | undefined) {
@@ -29,6 +29,13 @@ function normalizeOrigin(origin: string, port?: string) {
   }
 }
 
+function normalizeApiBaseUrl(url: string) {
+  const withoutTrailingSlash = url.replace(/\/$/, "");
+  return withoutTrailingSlash.endsWith(DEFAULT_API_PATH)
+    ? withoutTrailingSlash
+    : `${withoutTrailingSlash}${DEFAULT_API_PATH}`;
+}
+
 function buildApiBaseUrl(options: {
   apiBaseUrl?: string;
   backendOrigin?: string;
@@ -38,7 +45,7 @@ function buildApiBaseUrl(options: {
   const apiBaseUrl = getEnvValue(options.apiBaseUrl);
 
   if (apiBaseUrl) {
-    return apiBaseUrl.replace(/\/$/, "");
+    return normalizeApiBaseUrl(apiBaseUrl);
   }
 
   const backendOrigin = normalizeOrigin(
@@ -57,9 +64,12 @@ const publicApiBaseUrl = buildApiBaseUrl({
   apiPath: process.env.NEXT_PUBLIC_API_PATH,
 });
 
+const internalApiBaseUrl = getEnvValue(process.env.INTERNAL_API_BASE_URL);
+const explicitApiBaseUrl = getEnvValue(process.env.API_BASE_URL);
+
 const serverApiBaseUrl =
-  getEnvValue(process.env.INTERNAL_API_BASE_URL) ??
-  getEnvValue(process.env.API_BASE_URL)?.replace(/\/$/, "") ??
+  (internalApiBaseUrl ? normalizeApiBaseUrl(internalApiBaseUrl) : undefined) ??
+  (explicitApiBaseUrl ? normalizeApiBaseUrl(explicitApiBaseUrl) : undefined) ??
   (getEnvValue(process.env.BACKEND_ORIGIN) || getEnvValue(process.env.BACKEND_PORT) || getEnvValue(process.env.API_PATH)
     ? buildApiBaseUrl({
         backendOrigin: process.env.BACKEND_ORIGIN,
